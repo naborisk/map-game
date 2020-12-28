@@ -82,7 +82,7 @@ public class MapGameController implements Initializable {
             rightButtonAction();
         }
 
-        itemCheck();
+        tileCheck(chara.getPosX(), chara.getPosY());
     }
 
     // Operations for going the cat down
@@ -118,18 +118,33 @@ public class MapGameController implements Initializable {
     }
 
     //--- BEGIN EDIT
-    // item collection logic
-    void itemCheck() {
-        int x = chara.getPosX();
-        int y = chara.getPosY();
+    // item collection & goal logic
+    void tileCheck(int x, int y) {
 
-        if(mapData.getMap(x, y) == MapData.TYPE_OTHERS){
-            mapData.setMap(x, y, MapData.TYPE_SPACE);
-            printAction("COLLECT ITEM");
+        switch(mapData.getMap(x, y)) {
+            case MapData.TYPE_GOAL:
+                // Action when goal is reached
+                printAction("GOAL REACHED");
+                init();
+            break;
+            case MapData.TYPE_ITEM_APPLE:
+                // Action when apple is collected
+                printAction("APPLE COLLECTED");
+            break;
+            case MapData.TYPE_ITEM_CATFOOD:
+                // Action when catfood is collected
+                printAction("CATFOOD COLLECTED");
+            break;
+            case MapData.TYPE_ITEM_CATPLAY:
+                // Action when catplay is collected
+                printAction("CATPLAY COLLECTED");
+            break;
         }
 
+        mapData.setMap(x, y, MapData.TYPE_SPACE);
         refreshMap(mapData);
         drawMap(chara, mapData);
+        mapData.setImageViews();
     }
     //--- END EDIT
 

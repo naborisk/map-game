@@ -9,19 +9,26 @@ private static final String mapImageFiles[] = {
     "png/SPACE.png",
     "png/WALL.png",
     //--- BEGIN EDIT
-    "png/ITEM.png"
+    //"png/ITEM.png",
+    "png/dokuringo.png",
+    "png/catplay.png",
+    "png/catfood.png"
     //--- END EDIT
 };
 ```
 
-Added 'png/ITEM.png' to allow for item image loading (ITEM.png required)
+Added 'png/ITEM.png' to allow for item image loading (ITEM.png required)  
+items are added as follow:
+- dokuringo
+- catplay
+- catfood
 
 ## MapData Constructor
 ```java
 MapData(int x, int y){
-    mapImages = new Image[3];
+    mapImages = new Image[mapImageFiles.length];
     [...]
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<mapImageFiles.length; i++) {
         mapImages[i] = new Image(mapImageFiles[i]);
     }
     [...]
@@ -30,7 +37,8 @@ MapData(int x, int y){
 ```
 `mapImage` was initialized with the size of `2` at first, a change to `3` is needed to prevent `ArrayIndexOutOfBounds` Exception  
 loop's limit changed to 3 to allow for maximum # of mapImageFiles array (could be changed to mapImageFiles.length later).  
-The placeItem implementation is also added here.
+The placeItem implementation is also added here.  
+The size of `mapImages` and the limit for the loop was also changed to support bigger item pool
 
 # MoveChara.java
 # MapGameController.java

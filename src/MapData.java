@@ -1,16 +1,30 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Map;
+
 public class MapData {
     public static final int TYPE_SPACE = 0;
     public static final int TYPE_WALL = 1;
-    public static final int TYPE_OTHERS = 2;
+
+    //--- BEGIN EDIT
+    public static final int TYPE_ITEM_APPLE = 2;
+    public static final int TYPE_ITEM_CATPLAY = 3;
+    public static final int TYPE_ITEM_CATFOOD = 4;
+
+    public static final int TYPE_GOAL = 5;
+    //---END EDIT
+
     private static final String mapImageFiles[] = {
-        "png/SPACE.png",
-        "png/WALL.png",
-        //--- BEGIN EDIT
-        "png/ITEM.png"
-        //--- END EDIT
+            "png/SPACE.png",
+            "png/WALL.png",
+            //--- BEGIN EDIT
+            //"png/ITEM.png",
+            "png/dokuringo.png",
+            "png/catplay.png",
+            "png/catfood.png",
+            "png/GOAL.png"
+            //--- END EDIT
     };
 
     private Image[] mapImages;
@@ -22,9 +36,9 @@ public class MapData {
     private int numItems;
 
     MapData(int x, int y){
-        mapImages = new Image[3];
+        mapImages = new Image[mapImageFiles.length]; // This array's length should be the same with mapImageFiles's
         mapImageViews = new ImageView[y][x];
-        for (int i=0; i<3; i++) {
+        for (int i=0; i< mapImageFiles.length; i++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -34,7 +48,8 @@ public class MapData {
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
-        placeItem(3);
+        //placeItem(3);
+        setItem();
         setImageViews();
     }
 
@@ -103,6 +118,8 @@ public class MapData {
             dl[r] = tmp;
         }
 
+        System.out.println(dl[0][0] + " " + dl[0][1]);
+
         for (int i=0; i<dl.length; i++){
             int dx = dl[i][0];
             int dy = dl[i][1];
@@ -111,21 +128,46 @@ public class MapData {
                 digMap(x+dx*2, y+dy*2);
 
             }
+
         }
     }
 
     //--- BEGIN EDIT
-    void placeItem(int number) {
-        this.numItems = number;
+//    void placeItem(int number) {
+//        this.numItems = number;
+//
+//        int i = 0;
+//        while(i < number) {
+//            int x = (int) (Math.random() * maps.length);
+//            int y = (int) (Math.random() * maps.length);
+//            if(maps[y][x] == TYPE_SPACE){
+//                maps[y][x] = TYPE_OTHERS;
+//                i++;
+//                System.out.println("Item placed on: " + x + ", " + y);
+//            }
+//        }
+//    }
 
-        int i = 0;
-        while(i < number) {
-            int x = (int) (Math.random() * maps.length);
-            int y = (int) (Math.random() * maps.length);
-            if(maps[y][x] == TYPE_SPACE){
-                maps[y][x] = TYPE_OTHERS;
-                i++;
-                System.out.println("Item placed on: " + x + ", " + y);
+
+    public void setItem() {
+        int count = 0;
+        for (int i = 2; i < 4; i++) {
+            while (count < 3) {
+                int j = (int) (Math.random() * getHeight());
+                int z = (int) (Math.random() * getWidth());
+                if (getMap(j, z) == 0 && getMap(j, z) != 2 && getMap(j, z) != 3) {
+                    setMap(j, z, i);
+                    count++;
+                }
+            }
+            count=0;
+        }
+        while (true) {
+            int j = (int) (Math.random() * getHeight());
+            int z = (int) (Math.random() * getWidth());
+            if (getMap(j, z) == TYPE_SPACE) {
+                setMap(j, z, 4);
+                break;
             }
         }
     }
