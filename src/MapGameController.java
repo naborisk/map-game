@@ -120,27 +120,35 @@ public class MapGameController implements Initializable {
     //--- BEGIN EDIT
     // item collection & goal logic
     void tileCheck(int x, int y) {
+        //System.out.println(mapData.getNumItems());
 
         switch(mapData.getMap(x, y)) {
             case MapData.TYPE_GOAL:
                 // Action when goal is reached
                 printAction("GOAL REACHED");
-                init();
-            break;
+                if(mapData.getNumItems() == 0) {
+                    init();
+                }
+                return;
+            //break;
             case MapData.TYPE_ITEM_APPLE:
                 // Action when apple is collected
                 printAction("APPLE COLLECTED");
+                mapData.setNumItems(mapData.getNumItems()-1);
             break;
             case MapData.TYPE_ITEM_CATFOOD:
                 // Action when catfood is collected
                 printAction("CATFOOD COLLECTED");
+                mapData.setNumItems(mapData.getNumItems()-1);
             break;
             case MapData.TYPE_ITEM_CATPLAY:
                 // Action when catplay is collected
                 printAction("CATPLAY COLLECTED");
+                mapData.setNumItems(mapData.getNumItems()-1);
             break;
         }
 
+        // refresh the map after collecting item (will remove goal)
         mapData.setMap(x, y, MapData.TYPE_SPACE);
         refreshMap(mapData);
         drawMap(chara, mapData);

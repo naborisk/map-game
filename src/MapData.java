@@ -13,6 +13,7 @@ public class MapData {
     public static final int TYPE_ITEM_CATFOOD = 4;
 
     public static final int TYPE_GOAL = 5;
+    static int numItems;
     //---END EDIT
 
     private static final String mapImageFiles[] = {
@@ -33,8 +34,6 @@ public class MapData {
     private int width;
     private int height;
 
-    private int numItems;
-
     MapData(int x, int y){
         mapImages = new Image[mapImageFiles.length]; // This array's length should be the same with mapImageFiles's
         mapImageViews = new ImageView[y][x];
@@ -49,7 +48,8 @@ public class MapData {
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
         //placeItem(3);
-        setItem();
+        setItem(1);
+        setGoal();
         setImageViews();
     }
 
@@ -118,7 +118,7 @@ public class MapData {
             dl[r] = tmp;
         }
 
-        System.out.println(dl[0][0] + " " + dl[0][1]);
+        //System.out.println(dl[0][0] + " " + dl[0][1]);
 
         for (int i=0; i<dl.length; i++){
             int dx = dl[i][0];
@@ -149,27 +149,28 @@ public class MapData {
 //    }
 
 
-    public void setItem() {
+    public void setItem(int num) {
         int count = 0;
-        for (int i = 2; i < 4; i++) {
-            while (count < 3) {
+        for (int i = TYPE_ITEM_APPLE; i <= TYPE_ITEM_CATFOOD; i++) {
+            while (count < num) {
                 int j = (int) (Math.random() * getHeight());
                 int z = (int) (Math.random() * getWidth());
-                if (getMap(j, z) == 0 && getMap(j, z) != 2 && getMap(j, z) != 3) {
+                if (getMap(j, z) == TYPE_SPACE && j != 1 && z != 1) {
                     setMap(j, z, i);
                     count++;
                 }
             }
             count=0;
         }
-        while (true) {
-            int j = (int) (Math.random() * getHeight());
-            int z = (int) (Math.random() * getWidth());
-            if (getMap(j, z) == TYPE_SPACE) {
-                setMap(j, z, 4);
-                break;
-            }
-        }
+        numItems = num*3;
+    }
+
+    public static void setNumItems(int numItems) {
+        MapData.numItems = numItems;
+    }
+
+    public void setGoal() {
+        setMap(19, 13, TYPE_GOAL);
     }
     //--- END EDIT
 }

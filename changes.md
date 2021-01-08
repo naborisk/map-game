@@ -42,6 +42,7 @@ The size of `mapImages` and the limit for the loop was also changed to support b
 
 # MoveChara.java
 # MapGameController.java
+## init()
 ```java
 @Override
 public void initialize(URL url, ResourceBundle rb) {
@@ -62,5 +63,21 @@ public void init() {
 }
 ```
 
-Since we have to use for the 2 arguments in `initialize()`, we can make an independent
+Since we have no use for the 2 arguments in `initialize()`, we can make an independent
 function out of the code inside `initialize()` so we can use the function for screen clearing.
+
+## refreshMap()
+```java
+void refreshMap(MapData mapData) {
+    for(int y=0; y<mapData.getHeight(); y++){
+        for(int x=0; x<mapData.getWidth(); x++){
+            int index = y*mapData.getWidth() + x;
+            mapImageViews[index] = mapData.getImageView(x,y);
+        }
+    }
+    mapData.setImageViews();
+}
+```
+
+To make life easier when refreshing the map (after items are collected, etc.)
+the logic for refreshing map can be implemented into a function.
