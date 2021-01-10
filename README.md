@@ -3,14 +3,16 @@
 ![main-screen](img/main-screen.png)
 
 ## Remarks
-To run this project, import to IntelliJ IDE (Running manually is also fine as well)
+To run this project, import to IntelliJ IDE (Running manually is also fine as well)  
+This is the `mix` branch  
+* BGM Files must be in `src` for it to work on IntelliJ
 
 ## Progress
 - [x] Required Feature 1: Item -> Item has no effects yet
 - [x] Required Feature 2: Goal -> Static position for now
 - [x] Required Feature 3: Map Clear -> Completed
 - [ ] Required Feature 4: Score
-- [ ] Required Feature 5: 
+- [ ] Required Feature 5: BGM
 - [ ] Extra Feature 1: Settings Menu
 - [ ] Extra Feature 2:
 
