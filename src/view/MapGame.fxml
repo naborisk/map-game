@@ -2,14 +2,11 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.input.* ?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
-<VBox fx:controller="MapGameController" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/11" onKeyPressed="#keyAction">
+<VBox fx:controller="controller.MapGameController" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/11" onKeyPressed="#keyAction">
   <padding>
     <Insets top="10" right="10" bottom="10" left="10"/>
   </padding>
@@ -28,7 +25,7 @@
                     <Insets left="10"/>
                 </padding>
                 <ImageView fitWidth="32" preserveRatio="true">
-                    <Image url="png/dokuringo.png"/>
+                    <Image url="/assets/png/dokuringo.png"/>
                 </ImageView>
                 <Label prefWidth="32" alignment="BOTTOM_CENTER" text="test"/>
             </VBox>

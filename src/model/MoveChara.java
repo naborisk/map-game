@@ -1,6 +1,7 @@
+package model;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.animation.AnimationTimer;
 
 public class MoveChara {
@@ -11,7 +12,7 @@ public class MoveChara {
 
     private final String[] directions  = { "Down", "Left", "Right", "Up" };
     private final String[] animationNumbers = { "1", "2", "3" };
-    private final String pngPathBefore = "png/cat";
+    private final String pngPathBefore = "assets/png/cat";
     private final String pngPathAfter  = ".png";
 
     private int posX;
@@ -25,7 +26,7 @@ public class MoveChara {
 
 	private int charaDirection;
 
-    MoveChara(int startX, int startY, MapData mapData){
+    public MoveChara(int startX, int startY, MapData mapData){
         this.mapData = mapData;
 
         charaImages = new Image[4][3];
@@ -65,7 +66,7 @@ public class MoveChara {
             return false;
         }
         // In case another check is needed
-        //if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_SPACE)
+        //if (mapData.getMap(posX+dx, posY+dy) == model.MapData.TYPE_SPACE)
         else {
             return true;
         }

@@ -1,7 +1,7 @@
+package model;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.util.Map;
 
 public class MapData {
     public static final int TYPE_SPACE = 0;
@@ -17,14 +17,14 @@ public class MapData {
     //---END EDIT
 
     private static final String mapImageFiles[] = {
-            "png/SPACE.png",
-            "png/WALL.png",
+            "assets/png/SPACE.png",
+            "assets/png/WALL.png",
             //--- BEGIN EDIT
-            //"png/ITEM.png",
-            "png/dokuringo.png",
-            "png/catplay.png",
-            "png/catfood.png",
-            "png/GOAL.png"
+            //"assets.png/ITEM.assets.png",
+            "assets/png/dokuringo.png",
+            "assets/png/catplay.png",
+            "assets/png/catfood.png",
+            "assets/png/GOAL.png"
             //--- END EDIT
     };
 
@@ -34,7 +34,7 @@ public class MapData {
     private int width;
     private int height;
 
-    MapData(int x, int y){
+    public MapData(int x, int y){
         mapImages = new Image[mapImageFiles.length]; // This array's length should be the same with mapImageFiles's
         mapImageViews = new ImageView[y][x];
         for (int i=0; i< mapImageFiles.length; i++) {

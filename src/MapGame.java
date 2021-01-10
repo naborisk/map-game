@@ -11,7 +11,7 @@ public class MapGame extends Application {
     public void start(Stage primaryStage) throws Exception {
 	stage = primaryStage;
 	primaryStage.setTitle("MAP GAME");
-	Pane myPane_top = (Pane)FXMLLoader.load(getClass().getResource("MapGame.fxml"));
+	Pane myPane_top = (Pane)FXMLLoader.load(getClass().getResource("view/MapGame.fxml"));
 	Scene myScene = new Scene(myPane_top);
 	primaryStage.setScene(myScene);
     primaryStage.show();
