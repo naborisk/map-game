@@ -1,40 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.input.* ?>
+<?import Java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.Paint.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
-<VBox fx:controller="MapGameController" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/11" onKeyPressed="#keyAction">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyAction" prefHeight="692.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MapGameController">
   <padding>
-    <Insets top="10" right="10" bottom="10" left="10"/>
+    <Insets bottom="10" left="10" right="10" top="10" />
   </padding>
-  
+
   <children>
-    <HBox prefHeight="50">
+    <HBox prefHeight="37.0" prefWidth="514.0">
       <children>
-	<Button text="func1" prefWidth="100" onAction="#func1ButtonAction"/>
-	<Button text="func2" prefWidth="100"/>
-	<Button text="func3" prefWidth="100"/>
-	<Button text="func4" prefWidth="100"/>
+	<Button onAction="#func1ButtonAction" prefWidth="100" text="func1" />
+	<Button prefWidth="100" text="func2" />
+	<Button prefWidth="100" text="func3" />
+	<Button prefWidth="100" text="func4" />
+    <MenuButton text="Settings" prefWidth="114" mnemonicParsing="false">
+        <graphic>
+        <ImageView fitHeight="17" fitWidth="17" pickOnBounds="true"
+            preserveRatio="true">
+            <image>
+                <Image url="Settings.png"/>
+            </image>
+        </ImageView>
+    </graphic>
+        <items>
+            <Menu text="Character">
+                <items>
+                    <MenuItem text="WHITE CAT" onAction="#whiteCatButtonAction">
+                        <graphic>
+                            <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true"
+                                preserveRatio="true">
+                                <image>
+                                    <Image url="png/catLeft1.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <MenuItem text="BLACK CAT" onAction="#blackCatButtonAction">
+                    <graphic>
+                        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true"
+                            preserveRatio="true">
+                            <image>
+                                <Image url="charaImage/catLeft1.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    </MenuItem>
+                </items>
+            </Menu>
+            <Menu text="BGM">
+                <items>
+                    <MenuItem text="ON" onAction="#bgmOnButtonAction"/>
+                    <MenuItem text="OFF" onAction="#bgmOffButtonAction"/>
+                </items>
+            </Menu>
+            <MenuItem text="How to play" onAction="#explanation"/>
+            <MenuItem text="Reset" onAction="#resetButtonAction"/>
+        </items>
+    </MenuButton>
+            <Label fx:id="time" alignment="CENTER" text="Label">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
       </children>
-        <children>
-            <VBox>
-                <padding>
-                    <Insets left="10"/>
-                </padding>
-                <ImageView fitWidth="32" preserveRatio="true">
-                    <Image url="png/dokuringo.png"/>
-                </ImageView>
-                <Label prefWidth="32" alignment="BOTTOM_CENTER" text="test"/>
-            </VBox>
-        </children>
     </HBox>
-    <GridPane fx:id="mapGrid" prefWidth="360" prefHeight="360" >
+      <Pane prefHeight="154.0" prefWidth="638.0">
+         <children>
+            <ImageView fitHeight="117.0" fitWidth="172.0" layoutX="31.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="png/catfood.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="117.0" fitWidth="166.0" layoutX="271.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="png/catplay.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="117.0" fitWidth="166.0" layoutX="505.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="png/dokuringo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="FOOD" alignment="CENTER" layoutX="98.0" layoutY="124.0" text="0/0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="PLAY" layoutX="313.0" layoutY="123.0" text="0/0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="DOKURINGO" layoutX="545.0" layoutY="123.0" text="0/0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+    <GridPane fx:id="mapGrid" prefHeight="442.0" prefWidth="665.0">
     </GridPane>
 
   </children>
