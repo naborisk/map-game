@@ -3,7 +3,15 @@
 ![main-screen](img/main-screen.png)
 
 ## Remarks
-To run this project, import to IntelliJ IDE (Running manually is also fine as well)
+To run this project, import to IntelliJ IDE (Running manually is also fine as well)  
+To run directly from terminal:
+```shell
+$ cd src
+
+$ javac --module-path $PATH_TO_MODULE --add-modules javafx.controls,javafx.fxml,javafx.media *.*/java *.java
+
+$ java --module-path $PATH_TO_MODULE --add-modules javafx.controls,javafx.fxml,javafx.media mapgame.MapGame
+```
 
 ## Progress
 - [x] Required Feature 1: Item -> Item has no effects yet

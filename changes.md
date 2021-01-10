@@ -2,30 +2,30 @@
 Since a part of the original code has to be altered for the program to function correctly,
 changes made to the originally given code will be documented here (as much as possible).
 
-# model.MapData.java
+# mapgame.model.MapData.java
 ## mapImageFiles Array
 ```java
 private static final String mapImageFiles[] = {
-    "assets.png/SPACE.assets.png",
-    "assets.png/WALL.assets.png",
+    "mapgame.assets.png/SPACE.mapgame.assets.png",
+    "mapgame.assets.png/WALL.mapgame.assets.png",
     //--- BEGIN EDIT
-    //"assets.png/ITEM.assets.png",
-    "assets.png/dokuringo.assets.png",
-    "assets.png/catplay.assets.png",
-    "assets.png/catfood.assets.png"
+    //"mapgame.assets.png/ITEM.mapgame.assets.png",
+    "mapgame.assets.png/dokuringo.mapgame.assets.png",
+    "mapgame.assets.png/catplay.mapgame.assets.png",
+    "mapgame.assets.png/catfood.mapgame.assets.png"
     //--- END EDIT
 };
 ```
 
-Added 'assets.png/ITEM.assets.png' to allow for item image loading (ITEM.assets.png required)  
+Added 'mapgame.assets.png/ITEM.mapgame.assets.png' to allow for item image loading (ITEM.mapgame.assets.png required)  
 items are added as follow:
 - dokuringo
 - catplay
 - catfood
 
-## model.MapData Constructor
+## mapgame.model.MapData Constructor
 ```java
-model.MapData(int x, int y){
+mapgame.model.MapData(int x, int y){
     mapImages = new Image[mapImageFiles.length];
     [...]
     for (int i=0; i<mapImageFiles.length; i++) {
@@ -40,8 +40,8 @@ loop's limit changed to 3 to allow for maximum # of mapImageFiles array (could b
 The placeItem implementation is also added here.  
 The size of `mapImages` and the limit for the loop was also changed to support bigger item pool
 
-# model.MoveChara.java
-# controller.MapGameController.java
+# mapgame.model.MoveChara.java
+# mapgame.controller.MapGameController.java
 ## init()
 ```java
 @Override
@@ -50,8 +50,8 @@ public void initialize(URL url, ResourceBundle rb) {
 }
 
 public void init() {
-    mapData = new model.MapData(21, 15);
-    chara = new model.MoveChara(1, 1, mapData);
+    mapData = new mapgame.model.MapData(21, 15);
+    chara = new mapgame.model.MoveChara(1, 1, mapData);
     mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
     for(int y=0; y<mapData.getHeight(); y++){
         for(int x=0; x<mapData.getWidth(); x++){
@@ -68,7 +68,7 @@ function out of the code inside `initialize()` so we can use the function for sc
 
 ## refreshMap()
 ```java
-void refreshMap(model.MapData mapData) {
+void refreshMap(mapgame.model.MapData mapData) {
     for(int y=0; y<mapData.getHeight(); y++){
         for(int x=0; x<mapData.getWidth(); x++){
             int index = y*mapData.getWidth() + x;

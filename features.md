@@ -1,7 +1,7 @@
 # Features added to the project
 Additional features that was implemented by me will be documented here.
 
-# model.MapData.java
+# mapgame.model.MapData.java
 ## placeItem
 ```java
 void placeItem(int number) {
@@ -20,7 +20,7 @@ void placeItem(int number) {
 This is a simple implementation of `placeItem`. 
 This function will randomly find a free slot of `TYPE_SPACE` and change it to `TYPE_ITEM`
 
-# controller.MapGameController.java
+# mapgame.controller.MapGameController.java
 ## tileCheck
 ```java
 void tileCheck() {
@@ -28,19 +28,19 @@ void tileCheck() {
     int y = chara.getPosY();
 
     switch(mapData.getMap(x, y)) {
-        case model.MapData.TYPE_GOAL:
+        case mapgame.model.MapData.TYPE_GOAL:
             // Action when goal is reached
             printAction("GOAL REACHED");
             init();
         break;
-        case model.MapData.TYPE_ITEM_APPLE:
+        case mapgame.model.MapData.TYPE_ITEM_APPLE:
             // Action when apple is collected
-        case model.MapData.TYPE_ITEM_CATFOOD:
+        case mapgame.model.MapData.TYPE_ITEM_CATFOOD:
             // Action when catfood is collected
-        case model.MapData.TYPE_ITEM_CATPLAY:
+        case mapgame.model.MapData.TYPE_ITEM_CATPLAY:
             // Action when catplay is collected
         default:
-            mapData.setMap(x, y, model.MapData.TYPE_SPACE);
+            mapData.setMap(x, y, mapgame.model.MapData.TYPE_SPACE);
             refreshMap(mapData);
         break;
     }
