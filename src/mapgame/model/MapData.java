@@ -13,7 +13,7 @@ public class MapData {
     public static final int TYPE_ITEM_CATFOOD = 4;
 
     public static final int TYPE_GOAL = 5;
-    static int numItems;
+    int numItems;
     //---END EDIT
 
     private static final String mapImageFiles[] = {
@@ -22,8 +22,8 @@ public class MapData {
             //--- BEGIN EDIT
             //"mapgame.assets.png/ITEM.mapgame.assets.png",
             "mapgame/assets/png/dokuringo.png",
-            "mapgame/assets/png/whitecat/catplay.png",
-            "mapgame/assets/png/whitecat/catfood.png",
+            "mapgame/assets/png/catplay.png",
+            "mapgame/assets/png/catfood.png",
             "mapgame/assets/png/GOAL.png"
             //--- END EDIT
     };
@@ -165,8 +165,8 @@ public class MapData {
         numItems = num*3;
     }
 
-    public static void setNumItems(int numItems) {
-        MapData.numItems = numItems;
+    public void setNumItems(int numItems) {
+        this.numItems = numItems;
     }
 
     public void setGoal() {

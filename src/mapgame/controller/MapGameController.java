@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
@@ -24,10 +27,26 @@ public class MapGameController implements Initializable {
     public GridPane mapGrid;
     public ImageView[] mapImageViews;
 
-    int totalItems;
+    MusicController mc;
+
+    boolean soundEnabled;
+
+    @FXML
+    Label lblItemApple;
+
+    @FXML
+    Label lblItemFood;
+
+    @FXML
+    Label lblItemPlay;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        soundEnabled = true;
+        //MusicController.BGM();
+        mc = new MusicController();
+        mc.playBgm();
+
         init();
     }
 
@@ -43,6 +62,10 @@ public class MapGameController implements Initializable {
             }
         }
         drawMap(chara, mapData);
+
+        lblItemPlay.setText("0/1");
+        lblItemFood.setText("0/1");
+        lblItemApple.setText("0/1");
     }
 
     void refreshMap(MapData mapData) {
@@ -126,6 +149,8 @@ public class MapGameController implements Initializable {
     void tileCheck(int x, int y) {
         //System.out.println(mapData.getNumItems());
 
+        String amount, total;
+
         switch(mapData.getMap(x, y)) {
             case MapData.TYPE_GOAL:
                 // Action when goal is reached
@@ -138,16 +163,37 @@ public class MapGameController implements Initializable {
             case MapData.TYPE_ITEM_APPLE:
                 // Action when apple is collected
                 printAction("APPLE COLLECTED");
+
+                if(soundEnabled) mc.playSfx1();
+
+                amount = lblItemApple.getText().split("/")[0];
+                total = lblItemApple.getText().split("/")[1];
+                lblItemApple.setText((Integer.parseInt(amount) + 1) + "/" + total);
+
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
             case MapData.TYPE_ITEM_CATFOOD:
                 // Action when catfood is collected
                 printAction("CATFOOD COLLECTED");
+
+                if(soundEnabled) mc.playSfx1();
+
+                amount = lblItemFood.getText().split("/")[0];
+                total = lblItemFood.getText().split("/")[1];
+                lblItemFood.setText((Integer.parseInt(amount) + 1) + "/" + total);
+
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
             case MapData.TYPE_ITEM_CATPLAY:
                 // Action when catplay is collected
                 printAction("CATPLAY COLLECTED");
+
+                if(soundEnabled) mc.playSfx1();
+
+                amount = lblItemPlay.getText().split("/")[0];
+                total = lblItemPlay.getText().split("/")[1];
+                lblItemPlay.setText((Integer.parseInt(amount) + 1) + "/" + total);
+
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
         }
@@ -163,14 +209,26 @@ public class MapGameController implements Initializable {
     public void func1ButtonAction(ActionEvent event) throws IOException {
         printAction("RESET");
 
-        Node node=(Node) event.getSource();
+        /* Node node=(Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml"));/* Exception */
+        Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.show(); */
         //init();
-        //System.out.println("func1: Nothing to do");
+        System.out.println("func1: Nothing to do");
+    }
+
+    public void func2ButtonAction(ActionEvent event) {
+        Button func2 = (Button) event.getSource();
+
+        soundEnabled = !soundEnabled;
+        func2.setText(soundEnabled ? "Sound: ON" : "Sound: OFF");
+        if(soundEnabled) {
+            mc.playBgm();
+        } else  {
+            mc.stopBgm();
+        }
     }
 
     // Print actions of user inputs

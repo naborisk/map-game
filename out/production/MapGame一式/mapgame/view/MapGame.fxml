@@ -15,10 +15,12 @@
     <HBox prefHeight="50">
       <children>
 	<Button text="func1" prefWidth="100" onAction="#func1ButtonAction"/>
-	<Button text="func2" prefWidth="100"/>
+	<Button text="Sound: ON" fx:id="btnFunc2" prefWidth="100" onAction="#func2ButtonAction"/>
 	<Button text="func3" prefWidth="100"/>
 	<Button text="func4" prefWidth="100"/>
       </children>
+        <GridPane HBox.hgrow="ALWAYS" >
+        </GridPane>
         <children>
             <VBox>
                 <padding>
@@ -27,7 +29,25 @@
                 <ImageView fitWidth="32" preserveRatio="true">
                     <Image url="/mapgame/assets/png/dokuringo.png"/>
                 </ImageView>
-                <Label prefWidth="32" alignment="BOTTOM_CENTER" text="test"/>
+                <Label fx:id="lblItemApple" prefWidth="32" alignment="BOTTOM_CENTER" text="0/1"/>
+            </VBox>
+            <VBox>
+                <padding>
+                    <Insets left="10" top="10"/>
+                </padding>
+                <ImageView fitWidth="32" preserveRatio="true">
+                    <Image url="/mapgame/assets/png/catfood.png"/>
+                </ImageView>
+                <Label fx:id="lblItemFood" prefWidth="32" alignment="BOTTOM_CENTER" text="0/1"/>
+            </VBox>
+            <VBox>
+                <padding>
+                    <Insets left="10"/>
+                </padding>
+                <ImageView fitWidth="32" preserveRatio="true">
+                    <Image url="/mapgame/assets/png/catplay.png"/>
+                </ImageView>
+                <Label fx:id="lblItemPlay" prefWidth="32" alignment="BOTTOM_CENTER" text="0/1"/>
             </VBox>
         </children>
     </HBox>
