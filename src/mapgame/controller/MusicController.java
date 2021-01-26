@@ -24,11 +24,27 @@ public class MusicController {
     }
 
     public void playBgm() {
-        bgm.play();
+        try {
+            bgm.play();
+        } catch (Exception e) {
+            System.out.println("Music not found or can't be played");
+        }
     }
 
     public void stopBgm() {
-        bgm.stop();
+       if(bgm.isPlaying()) bgm.stop();
+    }
+
+    public void play(String path) {
+        try {
+            System.out.println("effectSound");
+            AudioClip ac = new AudioClip(path);
+            ac.setVolume(3);
+            ac.setRate(1);
+            ac.play();
+        } catch (Exception e) {
+            System.err.print(e);
+        }
     }
 
     public void playSfx1() {

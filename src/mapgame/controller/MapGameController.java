@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mapgame.model.MapData;
 import mapgame.model.MoveChara;
 
@@ -29,16 +33,19 @@ public class MapGameController implements Initializable {
 
     MusicController mc;
 
+    Timeline timer;
+    int sec = 0, min = 3;
+
     boolean soundEnabled;
 
     @FXML
     Label lblItemApple;
-
     @FXML
     Label lblItemFood;
-
     @FXML
     Label lblItemPlay;
+    @FXML
+    Label time;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,11 +54,46 @@ public class MapGameController implements Initializable {
         mc = new MusicController();
         mc.playBgm();
 
+        // Timer logic
+        timer = new Timeline(
+                /* 1000 milli sec */
+                new KeyFrame(Duration.millis(1000), event -> {
+                    sec--;
+                    if (sec < 0) {
+                        sec = 59;
+                        min--;
+                    }
+                    time.setText(String.format("%02d:%02d", min, sec));
+
+                    if (sec == 0 && min == 0) {
+                        try {
+                            Node node=(Node) event.getSource();
+                            Stage stage=(Stage) node.getScene().getWindow();
+                            Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+                }));
+
+        timer.setCycleCount(Animation.INDEFINITE);
+        timer.play();
         init();
     }
 
     ///--- BEGIN EDIT
     public void init() {
+        // Timer logic
+        min = 3;
+        sec = 0;
+        time.setText(String.format("%02d:%02d", min, sec));
+
+
+
+        // Initialization
         mapData = new MapData(21, 15);
         chara = new MoveChara(1, 1, mapData);
         mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
@@ -209,12 +251,14 @@ public class MapGameController implements Initializable {
     public void func1ButtonAction(ActionEvent event) throws IOException {
         printAction("RESET");
 
-        /* Node node=(Node) event.getSource();
+        mc.stopBgm();
+
+        Node node=(Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show(); */
+        stage.show();
         //init();
         System.out.println("func1: Nothing to do");
     }

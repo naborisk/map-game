@@ -14,13 +14,16 @@ import java.util.ResourceBundle;
 
 public class GameOverController implements Initializable {
 
+    MusicController mc;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        mc = new MusicController();
+        mc.playBgm();
     }
 
     public void restartButtonAction(ActionEvent event) throws IOException {
+        mc.stopBgm();
         Node node=(Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/mapgame/view/MapGame.fxml"));/* Exception */
