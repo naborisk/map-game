@@ -22,7 +22,19 @@
               <padding>
                   <Insets topRightBottomLeft="5" />
               </padding>
-              <Label fx:id="time" text="00:00" />
+              <Label fx:id="lblTime" text="00:00" />
+          </VBox>
+          <VBox>
+              <padding>
+                  <Insets topRightBottomLeft="5" />
+              </padding>
+              <Label text="Score" />
+          </VBox>
+          <VBox>
+              <padding>
+                  <Insets topRightBottomLeft="5" />
+              </padding>
+              <Label fx:id="lblScore" text="3000" />
           </VBox>
       </children>
         <GridPane HBox.hgrow="ALWAYS" >

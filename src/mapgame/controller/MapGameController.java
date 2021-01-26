@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,21 +32,19 @@ public class MapGameController implements Initializable {
     public GridPane mapGrid;
     public ImageView[] mapImageViews;
 
+    public static final int LIMIT_SECONDS = 180; // Set time here in seconds, it will be auto-converted in the code
+
     MusicController mc;
 
     Timeline timer;
-    int sec = 0, min = 3;
+    int sec, min, score;
 
     boolean soundEnabled;
 
     @FXML
-    Label lblItemApple;
+    Label lblItemApple, lblItemFood, lblItemPlay;
     @FXML
-    Label lblItemFood;
-    @FXML
-    Label lblItemPlay;
-    @FXML
-    Label time;
+    Label lblTime, lblScore;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,6 +52,9 @@ public class MapGameController implements Initializable {
         //MusicController.BGM();
         mc = new MusicController();
         mc.playBgm();
+
+        min = LIMIT_SECONDS/60; // get time limit in minutes (discarding seconds)
+        sec = LIMIT_SECONDS%60; // get the seconds left from the minutes above
 
         // Timer logic
         timer = new Timeline(
@@ -63,16 +65,11 @@ public class MapGameController implements Initializable {
                         sec = 59;
                         min--;
                     }
-                    time.setText(String.format("%02d:%02d", min, sec));
+                    lblTime.setText(String.format("%02d:%02d", min, sec));
 
                     if (sec == 0 && min == 0) {
                         try {
-                            Node node=(Node) event.getSource();
-                            Stage stage=(Stage) node.getScene().getWindow();
-                            Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
-                            Scene scene = new Scene(root);
-                            stage.setScene(scene);
-                            stage.show();
+                            GameOver();
                         } catch (Exception e) {
                             System.out.println(e);
                         }
@@ -84,14 +81,28 @@ public class MapGameController implements Initializable {
         init();
     }
 
+    private void GameOver() {
+        try {
+            Stage stage=(Stage) lblScore.getScene().getWindow(); // getScene is called from lblScore
+            Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+    }
+
     ///--- BEGIN EDIT
     public void init() {
+        // Score logic
+        score = 3000;
+
         // Timer logic
-        min = 3;
-        sec = 0;
-        time.setText(String.format("%02d:%02d", min, sec));
+        min = LIMIT_SECONDS/60;
+        sec = LIMIT_SECONDS%60;
 
-
+        lblTime.setText(String.format("%02d:%02d", min, sec));
 
         // Initialization
         mapData = new MapData(21, 15);
@@ -152,6 +163,14 @@ public class MapGameController implements Initializable {
         }
 
         tileCheck(chara.getPosX(), chara.getPosY());
+        lblScore.setText(String.valueOf((score-=100))); // Set the text to tha value of score-100 while assigning the value
+        if(score < 0){
+            try {
+                GameOver();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Operations for going the cat down
@@ -253,12 +272,7 @@ public class MapGameController implements Initializable {
 
         mc.stopBgm();
 
-        Node node=(Node) event.getSource();
-        Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        GameOver();
         //init();
         System.out.println("func1: Nothing to do");
     }
