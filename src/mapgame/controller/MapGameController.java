@@ -7,12 +7,11 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mapgame.model.MapData;
@@ -44,10 +44,14 @@ public class MapGameController implements Initializable {
     @FXML
     Label lblItemApple, lblItemFood, lblItemPlay;
     @FXML
-    Label lblTime, lblScore;
+    Label lblTime, lblScore, lblLevel, lblTotalScore;
+    @FXML
+    HBox hbStats;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        hbStats.setAlignment(Pos.BASELINE_CENTER);
+
         soundEnabled = true;
         //MusicController.BGM();
         mc = new MusicController();
@@ -82,6 +86,7 @@ public class MapGameController implements Initializable {
     }
 
     private void GameOver() {
+        mc.stopBgm();
         try {
             Stage stage=(Stage) lblScore.getScene().getWindow(); // getScene is called from lblScore
             Parent root = FXMLLoader.load(getClass().getResource("../view/GameOver.fxml")); // Exception
@@ -163,7 +168,7 @@ public class MapGameController implements Initializable {
         }
 
         tileCheck(chara.getPosX(), chara.getPosY());
-        lblScore.setText(String.valueOf((score-=100))); // Set the text to tha value of score-100 while assigning the value
+        lblScore.setText(String.valueOf((score-=10))); // Set the text to tha value of score-10 while assigning the value
         if(score < 0){
             try {
                 GameOver();
@@ -217,6 +222,14 @@ public class MapGameController implements Initializable {
                 // Action when goal is reached
                 printAction("GOAL REACHED");
                 if(mapData.getNumItems() == 0) {
+                    var currentScore = Integer.valueOf(lblScore.getText());
+                    var totalScore = Integer.valueOf(lblTotalScore.getText());
+
+                    var currentLevel = Integer.valueOf(lblLevel.getText());
+
+                    lblTotalScore.setText(String.valueOf(totalScore + currentScore));
+                    lblLevel.setText(String.valueOf(currentLevel + 1));
+
                     init();
                 }
                 return;
@@ -267,17 +280,17 @@ public class MapGameController implements Initializable {
     }
     //--- END EDIT
 
-    public void func1ButtonAction(ActionEvent event) throws IOException {
+    public void charaButtonAction(ActionEvent event) throws IOException {
         printAction("RESET");
 
-        mc.stopBgm();
+        //mc.stopBgm();
 
         GameOver();
         //init();
         System.out.println("func1: Nothing to do");
     }
 
-    public void func2ButtonAction(ActionEvent event) {
+    public void soundButtonAction(ActionEvent event) {
         Button func2 = (Button) event.getSource();
 
         soundEnabled = !soundEnabled;
@@ -288,6 +301,16 @@ public class MapGameController implements Initializable {
             mc.stopBgm();
         }
     }
+
+    public void restartButtonAction(ActionEvent event) {
+        chara = new MoveChara(1, 1, mapData);
+        drawMap(chara, mapData);
+    }
+
+    public void resetButtonAction(ActionEvent event) {
+        init();
+    }
+
 
     // Print actions of user inputs
     public void printAction(String actionString) {

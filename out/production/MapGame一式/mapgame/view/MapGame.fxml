@@ -14,10 +14,16 @@
   <children>
     <HBox prefHeight="50">
       <children>
-          <Button text="func1" prefWidth="100" onAction="#func1ButtonAction"/>
-          <Button text="Sound: ON" prefWidth="100" onAction="#func2ButtonAction"/>
-          <Button text="func3" prefWidth="100"/>
-          <Button text="func4" prefWidth="100"/>
+          <Button text="Character" prefWidth="100" onAction="#charaButtonAction">
+              <graphic>
+                  <ImageView fitWidth="20" fitHeight="20">
+                      <Image url="/mapgame/assets/png/whitecat/catRight1.png" />
+                  </ImageView>
+              </graphic>
+          </Button>
+          <Button text="Sound: ON" prefWidth="100" onAction="#soundButtonAction"/>
+          <Button text="Restart" prefWidth="100" onAction="#restartButtonAction"/>
+          <Button text="Reset" prefWidth="100" onAction="#resetButtonAction"/>
           <VBox>
               <padding>
                   <Insets topRightBottomLeft="5" />
@@ -69,6 +75,15 @@
             </VBox>
         </children>
     </HBox>
+      <HBox fx:id="hbStats">
+          <children>
+              <Label text="Level: " />
+              <Label text="1" fx:id="lblLevel" />
+              <Label text="    " />
+              <Label text="Total Score: " />
+              <Label text="0000" fx:id="lblTotalScore" />
+          </children>
+      </HBox>
     <GridPane fx:id="mapGrid" prefWidth="360" prefHeight="360" >
     </GridPane>
 

@@ -7,8 +7,8 @@ import javafx.scene.media.AudioClip;
 
 public class MusicController {
     //エラーが出たらまずパスを変えてみて下さい。
-    private static final String BGM_PATH = "src/mapgame/assets/bgm/";
-    private static final String SFX_PATH = "src/mapgame/assets/sfx/";
+    public static final String BGM_PATH = "src/mapgame/assets/bgm/";
+    public static final String SFX_PATH = "src/mapgame/assets/sfx/";
 
     AudioClip bgm;
 
@@ -38,8 +38,8 @@ public class MusicController {
     public void play(String path) {
         try {
             System.out.println("effectSound");
-            AudioClip ac = new AudioClip(path);
-            ac.setVolume(3);
+            AudioClip ac = new AudioClip(new File(path).toURI().toString());
+            ac.setVolume(2);
             ac.setRate(1);
             ac.play();
         } catch (Exception e) {
