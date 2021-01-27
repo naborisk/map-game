@@ -12,7 +12,15 @@ public class MoveChara {
 
     private final String[] directions  = { "Down", "Left", "Right", "Up" };
     private final String[] animationNumbers = { "1", "2", "3" };
-    private final String pngPathBefore = "mapgame/assets/png/whitecat/cat";
+    //private final String pngPathBefore = "mapgame/assets/png/whitecat/cat";
+    private final String pngPathBefore = "mapgame/assets/png/";
+
+    // Variables for changing char
+    public static final String CHAR_BLACK = "blackcat/cat";
+    public static final String CHAR_WHITE = "whitecat/cat";
+
+    private String currentChar;
+
     private final String pngPathAfter  = ".png";
 
     private int posX;
@@ -29,6 +37,10 @@ public class MoveChara {
     public MoveChara(int startX, int startY, MapData mapData){
         this.mapData = mapData;
 
+        //--- BEGIN EDIT
+        currentChar = CHAR_WHITE;
+        //--- END EDIT
+
         charaImages = new Image[4][3];
         charaImageViews = new ImageView[4];
         charaImageAnimations = new ImageAnimation[4];
@@ -36,7 +48,7 @@ public class MoveChara {
         for (int i=0; i<4; i++) {
             charaImages[i] = new Image[3];
             for (int j=0; j<3; j++) {
-                charaImages[i][j] = new Image(pngPathBefore + directions[i] + animationNumbers[j] + pngPathAfter);
+                charaImages[i][j] = new Image(pngPathBefore + CHAR_WHITE + directions[i] + animationNumbers[j] + pngPathAfter); // pngPathColor added here
             }
             charaImageViews[i] = new ImageView(charaImages[i][0]);
             charaImageAnimations[i] = new ImageAnimation( charaImageViews[i], charaImages[i] );
@@ -46,6 +58,21 @@ public class MoveChara {
         posY = startY;
 
         setCharaDirection(TYPE_RIGHT); // start from the image of right-direction
+    }
+
+    // Init with color
+    public MoveChara(int startX, int startY, MapData mapData, String chara) {
+        this(startX, startY, mapData);
+
+        currentChar = chara;
+        for (int i=0; i<4; i++) {
+            charaImages[i] = new Image[3];
+            for (int j=0; j<3; j++) {
+                charaImages[i][j] = new Image(pngPathBefore + chara + directions[i] + animationNumbers[j] + pngPathAfter); // pngPathColor added here
+            }
+            charaImageViews[i] = new ImageView(charaImages[i][0]);
+            charaImageAnimations[i] = new ImageAnimation( charaImageViews[i], charaImages[i] );
+        }
     }
 
     // set the cat's image of a direction
@@ -96,6 +123,10 @@ public class MoveChara {
     // getter: y-positon of the cat
     public int getPosY(){
         return posY;
+    }
+
+    public String getCurrentChar() {
+        return currentChar;
     }
 
     // Draw the cat animation

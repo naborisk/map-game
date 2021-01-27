@@ -280,13 +280,21 @@ public class MapGameController implements Initializable {
     }
     //--- END EDIT
 
-    public void charaButtonAction(ActionEvent event) throws IOException {
-        printAction("RESET");
+    public void charaButtonAction(ActionEvent event) {
+        var x = chara.getPosX();
+        var y = chara.getPosY();
+        var color = chara.getCurrentChar().equals(MoveChara.CHAR_BLACK) ? MoveChara.CHAR_WHITE : MoveChara.CHAR_BLACK;
+
+        chara = new MoveChara(x, y, mapData, color);
+
+        printAction("CHARACTER CHANGED");
 
         //mc.stopBgm();
 
-        GameOver();
+        //GameOver();
         //init();
+
+
         System.out.println("func1: Nothing to do");
     }
 
@@ -303,7 +311,8 @@ public class MapGameController implements Initializable {
     }
 
     public void restartButtonAction(ActionEvent event) {
-        chara = new MoveChara(1, 1, mapData);
+        var color = chara.getCurrentChar();
+        chara = new MoveChara(1, 1, mapData, color);
         drawMap(chara, mapData);
     }
 
