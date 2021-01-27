@@ -4,13 +4,24 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="mapgame.controller.GameOverController"
-      prefHeight="550" prefWidth="692">
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mapgame.controller.GameOverController"
+            prefHeight="567" prefWidth="692">
     <padding>
-        <Insets topRightBottomLeft="10" />
+        <Insets topRightBottomLeft="100" />
     </padding>
-    <Button text="func1" prefWidth="100" onAction="#restartButtonAction"/>
+    <center>
+        <Label prefHeight="100">
+            <font>
+                <Font name="Impact" size="50.0" />
+            </font>
+            <text>Game Over!</text>
+        </Label>
+    </center>
+    <bottom>
+        <Button text="Try Again" prefWidth="Infinity" onAction="#restartButtonAction"/>
+    </bottom>
 
-</VBox>
+</BorderPane>

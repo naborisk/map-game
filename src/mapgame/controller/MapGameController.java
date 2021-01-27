@@ -2,6 +2,7 @@ package mapgame.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.animation.Animation;
@@ -16,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
@@ -25,6 +27,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import mapgame.model.MapData;
 import mapgame.model.MoveChara;
+
+import javax.swing.*;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
@@ -47,6 +51,8 @@ public class MapGameController implements Initializable {
     Label lblTime, lblScore, lblLevel, lblTotalScore;
     @FXML
     HBox hbStats;
+    @FXML
+    Image imgCharaButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,23 +109,23 @@ public class MapGameController implements Initializable {
         // Score logic
         score = 3000;
 
+        // Make the game harder when level is high
+        int totalSeconds = LIMIT_SECONDS, currentLevel =Integer.parseInt(lblLevel.getText());
+        if(currentLevel > 1) totalSeconds = LIMIT_SECONDS - (Integer.parseInt(lblLevel.getText()) * 20 );
+        if(totalSeconds < 60) totalSeconds = 60; // Let's not make it impossible
+
         // Timer logic
-        min = LIMIT_SECONDS/60;
-        sec = LIMIT_SECONDS%60;
+        min = totalSeconds/60;
+        sec = totalSeconds%60;
 
         lblTime.setText(String.format("%02d:%02d", min, sec));
 
         // Initialization
         mapData = new MapData(21, 15);
-        chara = new MoveChara(1, 1, mapData);
-        mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
-        for(int y=0; y<mapData.getHeight(); y++){
-            for(int x=0; x<mapData.getWidth(); x++){
-                int index = y*mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getImageView(x,y);
-            }
-        }
-        drawMap(chara, mapData);
+        var color = Objects.isNull(chara) ? MoveChara.CHAR_WHITE : chara.getCurrentChar();
+
+        chara = new MoveChara(1, 1, mapData, color);
+        refreshImages();
 
         lblItemPlay.setText("0/1");
         lblItemFood.setText("0/1");
@@ -281,21 +287,30 @@ public class MapGameController implements Initializable {
     //--- END EDIT
 
     public void charaButtonAction(ActionEvent event) {
-        var x = chara.getPosX();
-        var y = chara.getPosY();
+        var posX = chara.getPosX();
+        var posY = chara.getPosY();
         var color = chara.getCurrentChar().equals(MoveChara.CHAR_BLACK) ? MoveChara.CHAR_WHITE : MoveChara.CHAR_BLACK;
 
-        chara = new MoveChara(x, y, mapData, color);
+        chara = new MoveChara(posX, posY, mapData, color);
+
+        refreshImages();
+
+        //mapData.setImageViews();
 
         printAction("CHARACTER CHANGED");
 
-        //mc.stopBgm();
-
-        //GameOver();
-        //init();
-
-
         System.out.println("func1: Nothing to do");
+    }
+
+    private void refreshImages() {
+        mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
+        for(int y=0; y<mapData.getHeight(); y++){
+            for(int x=0; x<mapData.getWidth(); x++){
+                int index = y*mapData.getWidth() + x;
+                mapImageViews[index] = mapData.getImageView(x,y);
+            }
+        }
+        drawMap(chara, mapData);
     }
 
     public void soundButtonAction(ActionEvent event) {

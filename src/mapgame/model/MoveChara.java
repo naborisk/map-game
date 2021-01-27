@@ -62,9 +62,14 @@ public class MoveChara {
 
     // Init with color
     public MoveChara(int startX, int startY, MapData mapData, String chara) {
-        this(startX, startY, mapData);
+        this.mapData = mapData;
 
         currentChar = chara;
+
+        charaImages = new Image[4][3];
+        charaImageViews = new ImageView[4];
+        charaImageAnimations = new ImageAnimation[4];
+
         for (int i=0; i<4; i++) {
             charaImages[i] = new Image[3];
             for (int j=0; j<3; j++) {
@@ -73,6 +78,11 @@ public class MoveChara {
             charaImageViews[i] = new ImageView(charaImages[i][0]);
             charaImageAnimations[i] = new ImageAnimation( charaImageViews[i], charaImages[i] );
         }
+
+        posX = startX;
+        posY = startY;
+
+        setCharaDirection(TYPE_RIGHT); // start from the image of right-direction
     }
 
     // set the cat's image of a direction
