@@ -8,7 +8,7 @@ public class MapData {
     public static final int TYPE_WALL = 1;
 
     //--- BEGIN EDIT
-    public static final int TYPE_ITEM_APPLE = 2;
+    public static final int TYPE_ITEM_WATCH = 2;
     public static final int TYPE_ITEM_CATPLAY = 3;
     public static final int TYPE_ITEM_CATFOOD = 4;
 
@@ -48,7 +48,7 @@ public class MapData {
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
         //placeItem(3);
-        setItem(1);
+        setItem(1, 3, 3);
         setGoal();
         setImageViews();
     }
@@ -148,21 +148,43 @@ public class MapData {
 //        }
 //    }
 
-
     public void setItem(int num) {
+        setItem(num, num, num);
+    }
+
+    public void setItem(int numWatch, int numPlay, int numFood) {
         int count = 0;
-        for (int i = TYPE_ITEM_APPLE; i <= TYPE_ITEM_CATFOOD; i++) {
-            while (count < num) {
-                int j = (int) (Math.random() * getHeight());
-                int z = (int) (Math.random() * getWidth());
-                if (getMap(j, z) == TYPE_SPACE && j != 1 && z != 1) {
-                    setMap(j, z, i);
-                    count++;
-                }
+        //for (int i = TYPE_ITEM_APPLE; i <= TYPE_ITEM_CATFOOD; i++) {
+        while (count < numWatch) {
+            int j = (int) (Math.random() * getHeight());
+            int z = (int) (Math.random() * getWidth());
+            if (getMap(j, z) == TYPE_SPACE && j != 1 && z != 1) {
+                setMap(j, z, TYPE_ITEM_WATCH);
+                count++;
             }
-            count=0;
         }
-        numItems = num*3;
+        count=0;
+
+        while (count < numPlay) {
+            int j = (int) (Math.random() * getHeight());
+            int z = (int) (Math.random() * getWidth());
+            if (getMap(j, z) == TYPE_SPACE && j != 1 && z != 1) {
+                setMap(j, z, TYPE_ITEM_CATPLAY);
+                count++;
+            }
+        }
+        count = 0;
+
+        while (count < numFood) {
+            int j = (int) (Math.random() * getHeight());
+            int z = (int) (Math.random() * getWidth());
+            if (getMap(j, z) == TYPE_SPACE && j != 1 && z != 1) {
+                setMap(j, z, TYPE_ITEM_CATFOOD);
+                count++;
+            }
+        }
+        //}
+        numItems = numWatch + numPlay + numFood;
     }
 
     public void setNumItems(int numItems) {

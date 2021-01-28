@@ -1,6 +1,8 @@
 package mapgame.controller;
 
 import java.net.URL;
+import java.security.Key;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -27,11 +29,18 @@ import javafx.util.Duration;
 import mapgame.model.MapData;
 import mapgame.model.MoveChara;
 
+import javax.swing.plaf.ActionMapUIResource;
+
 public class MapGameController implements Initializable {
     public MapData mapData;
     public MoveChara chara;
     public GridPane mapGrid;
     public ImageView[] mapImageViews;
+
+    public KeyCode[] keybind;
+
+    public KeyCode[] KEYBIND_HJKL = {KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L};
+    public KeyCode[] KEYBIND_WASD = {KeyCode.A, KeyCode.S, KeyCode.W, KeyCode.D};
 
     public static final int LIMIT_SECONDS = 180; // Set time here in seconds, it will be auto-converted in the code
 
@@ -85,6 +94,8 @@ public class MapGameController implements Initializable {
 
         timer.setCycleCount(Animation.INDEFINITE);
         timer.play();
+
+        keybind = KEYBIND_HJKL;
         init();
     }
 
@@ -117,6 +128,8 @@ public class MapGameController implements Initializable {
 
         lblTime.setText(String.format("%02d:%02d", min, sec));
 
+        timer.play();
+
         // Initialization
         mapData = new MapData(21, 15);
         String color = Objects.isNull(chara) ? MoveChara.CHAR_WHITE : chara.getCurrentChar();
@@ -124,9 +137,9 @@ public class MapGameController implements Initializable {
         chara = new MoveChara(1, 1, mapData, color);
         refreshImages();
 
-        lblItemPlay.setText("0/1");
-        lblItemFood.setText("0/1");
         lblItemWatch.setText("0/1");
+        lblItemPlay.setText("0/3");
+        lblItemFood.setText("0/3");
     }
 
     void refreshMap(MapData mapData) {
@@ -160,13 +173,13 @@ public class MapGameController implements Initializable {
     // Get users key actions
     public void keyAction(KeyEvent event){
         KeyCode key = event.getCode(); System.out.println("keycode:"+key);
-        if (key == KeyCode.H){
+        if (key == keybind[0]){
         	leftButtonAction();
-        }else if (key == KeyCode.J){
+        }else if (key == keybind[1]){
             downButtonAction(); 
-        }else if (key == KeyCode.K){
+        }else if (key == keybind[2]){
             upButtonAction();
-        }else if (key == KeyCode.L){
+        }else if (key == keybind[3]){
             rightButtonAction();
         }
 
@@ -237,15 +250,18 @@ public class MapGameController implements Initializable {
                 }
                 return;
             //break;
-            case MapData.TYPE_ITEM_APPLE:
+            case MapData.TYPE_ITEM_WATCH:
                 // Action when apple is collected
-                printAction("APPLE COLLECTED");
+                printAction("WATCH COLLECTED");
+                printAction("ZA WARUDO! TOKI WO TOMARE!!!");
 
                 if(soundEnabled) mc.playSfx1();
 
                 amount = lblItemWatch.getText().split("/")[0];
                 total = lblItemWatch.getText().split("/")[1];
                 lblItemWatch.setText((Integer.parseInt(amount) + 1) + "/" + total);
+
+                timer.stop();
 
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
@@ -330,6 +346,13 @@ public class MapGameController implements Initializable {
 
     public void resetButtonAction(ActionEvent event) {
         init();
+    }
+
+    public void modeButtonAction(ActionEvent event) {
+        Button btnMode = (Button) event.getSource();
+
+        keybind = Arrays.equals(keybind, KEYBIND_HJKL) ? KEYBIND_WASD : KEYBIND_HJKL;
+        btnMode.setText(Arrays.equals(keybind, KEYBIND_HJKL) ? "Mode: HJKL" : "Mode: WASD");
     }
 
 
