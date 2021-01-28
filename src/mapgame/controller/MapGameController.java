@@ -1,7 +1,6 @@
 package mapgame.controller;
 
 import java.net.URL;
-import java.security.Key;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -261,7 +260,12 @@ public class MapGameController implements Initializable {
                 total = lblItemWatch.getText().split("/")[1];
                 lblItemWatch.setText((Integer.parseInt(amount) + 1) + "/" + total);
 
-                timer.stop();
+                //timer.stop();
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
