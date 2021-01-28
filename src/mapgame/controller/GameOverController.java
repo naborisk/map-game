@@ -19,7 +19,7 @@ public class GameOverController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mc = new MusicController();
-        mc.play("src/mapgame/assets/bgm/gameover.mp3");
+        mc.play("mapgame/assets/bgm/gameover.mp3");
     }
 
     public void restartButtonAction(ActionEvent event) throws IOException {

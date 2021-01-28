@@ -21,7 +21,7 @@ public class MapData {
             "mapgame/assets/png/WALL.png",
             //--- BEGIN EDIT
             //"mapgame.assets.png/ITEM.mapgame.assets.png",
-            "mapgame/assets/png/dokuringo.png",
+            "mapgame/assets/png/tokei.png",
             "mapgame/assets/png/catplay.png",
             "mapgame/assets/png/catfood.png",
             "mapgame/assets/png/GOAL.png"

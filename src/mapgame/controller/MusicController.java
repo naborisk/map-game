@@ -7,8 +7,8 @@ import javafx.scene.media.AudioClip;
 
 public class MusicController {
     //エラーが出たらまずパスを変えてみて下さい。
-    public static final String BGM_PATH = "src/mapgame/assets/bgm/";
-    public static final String SFX_PATH = "src/mapgame/assets/sfx/";
+    public static final String BGM_PATH = "mapgame/assets/bgm/";
+    public static final String SFX_PATH = "mapgame/assets/sfx/";
 
     AudioClip bgm;
 

@@ -1,6 +1,5 @@
 package mapgame.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -28,8 +27,6 @@ import javafx.util.Duration;
 import mapgame.model.MapData;
 import mapgame.model.MoveChara;
 
-import javax.swing.*;
-
 public class MapGameController implements Initializable {
     public MapData mapData;
     public MoveChara chara;
@@ -46,7 +43,7 @@ public class MapGameController implements Initializable {
     boolean soundEnabled;
 
     @FXML
-    Label lblItemApple, lblItemFood, lblItemPlay;
+    Label lblItemWatch, lblItemFood, lblItemPlay;
     @FXML
     Label lblTime, lblScore, lblLevel, lblTotalScore;
     @FXML
@@ -122,14 +119,14 @@ public class MapGameController implements Initializable {
 
         // Initialization
         mapData = new MapData(21, 15);
-        var color = Objects.isNull(chara) ? MoveChara.CHAR_WHITE : chara.getCurrentChar();
+        String color = Objects.isNull(chara) ? MoveChara.CHAR_WHITE : chara.getCurrentChar();
 
         chara = new MoveChara(1, 1, mapData, color);
         refreshImages();
 
         lblItemPlay.setText("0/1");
         lblItemFood.setText("0/1");
-        lblItemApple.setText("0/1");
+        lblItemWatch.setText("0/1");
     }
 
     void refreshMap(MapData mapData) {
@@ -228,10 +225,10 @@ public class MapGameController implements Initializable {
                 // Action when goal is reached
                 printAction("GOAL REACHED");
                 if(mapData.getNumItems() == 0) {
-                    var currentScore = Integer.valueOf(lblScore.getText());
-                    var totalScore = Integer.valueOf(lblTotalScore.getText());
+                    int currentScore = Integer.valueOf(lblScore.getText());
+                    int totalScore = Integer.valueOf(lblTotalScore.getText());
 
-                    var currentLevel = Integer.valueOf(lblLevel.getText());
+                    int currentLevel = Integer.valueOf(lblLevel.getText());
 
                     lblTotalScore.setText(String.valueOf(totalScore + currentScore));
                     lblLevel.setText(String.valueOf(currentLevel + 1));
@@ -246,9 +243,9 @@ public class MapGameController implements Initializable {
 
                 if(soundEnabled) mc.playSfx1();
 
-                amount = lblItemApple.getText().split("/")[0];
-                total = lblItemApple.getText().split("/")[1];
-                lblItemApple.setText((Integer.parseInt(amount) + 1) + "/" + total);
+                amount = lblItemWatch.getText().split("/")[0];
+                total = lblItemWatch.getText().split("/")[1];
+                lblItemWatch.setText((Integer.parseInt(amount) + 1) + "/" + total);
 
                 mapData.setNumItems(mapData.getNumItems()-1);
             break;
@@ -287,9 +284,9 @@ public class MapGameController implements Initializable {
     //--- END EDIT
 
     public void charaButtonAction(ActionEvent event) {
-        var posX = chara.getPosX();
-        var posY = chara.getPosY();
-        var color = chara.getCurrentChar().equals(MoveChara.CHAR_BLACK) ? MoveChara.CHAR_WHITE : MoveChara.CHAR_BLACK;
+        int posX = chara.getPosX();
+        int posY = chara.getPosY();
+        String color = chara.getCurrentChar().equals(MoveChara.CHAR_BLACK) ? MoveChara.CHAR_WHITE : MoveChara.CHAR_BLACK;
 
         chara = new MoveChara(posX, posY, mapData, color);
 
@@ -326,7 +323,7 @@ public class MapGameController implements Initializable {
     }
 
     public void restartButtonAction(ActionEvent event) {
-        var color = chara.getCurrentChar();
+        String color = chara.getCurrentChar();
         chara = new MoveChara(1, 1, mapData, color);
         drawMap(chara, mapData);
     }
